@@ -41,6 +41,9 @@ Where `filters` is a set of filtering parameters, for example:
 
   List all enquiries created before the `date` (YYYY-MM-DDTHH:MM:SS)
 
+### Updates to Enquiries
+You should periodically check for updates to enquiries. Some people fill out qualification questionnaires up to 72hrs later.
+
 ### Responses
 The response to a request will conform with the JSON API specification.
 
