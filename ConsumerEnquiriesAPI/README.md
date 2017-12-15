@@ -18,15 +18,9 @@ Authorization Bearer [office_authorization_token]
 Where `office_authorization_token` is a unique access code of an office.
 
 ## Endpoints
+### List Enquiries
+You should query this endpoint for consumer enquiries. If anyone has filled out a qualification profile form it will also be shown.
 
-### Show a specific enquiry
-The request requires authentication (see above).
-
-GET `/consumer_enquiries/:enquiry_id`
-
-Where `enquiry_id` is the ID of a specific consumer enquiry
-
-### List enquiries
 The request requires authentication (see above).
 
 GET `/consumer_enquiries?:filters`
@@ -42,13 +36,27 @@ Where `filters` is a set of filtering parameters, for example:
   List all enquiries created before the `date` (YYYY-MM-DDTHH:MM:SS)
 
 ### Updates to Enquiries
-You should periodically check for updates to enquiries. Some people fill out qualification questionnaires up to 72hrs later.
+You should query this endpoint for consumers who filled out the qualification profile form since the last time you checked.
+
+The request requires authentication (see above).
+
+GET `/qualification_profiles?:filters`
+
+Where `filters` is a set of filtering parameters, for example:
+
+* `q[updated_at_gt]=2017-10-25T10:23:56`
+
+  List all enquiries updated after the `date` (YYYY-MM-DDTHH:MM:SS)
+
+* `q[updated_at_lt]=2017-10-25T10:23:56`
+
+  List all enquiries updated before the `date` (YYYY-MM-DDTHH:MM:SS)
 
 ### Responses
 The response to a request will conform with the JSON API specification.
 
 #### Attributes
-The following attributes will returned for each consumer enquiry:
+The following attributes will returned for each new consumer enquiry:
 
 * `property_address` (string) - e.g. 40 Islington High St
 * `property_reference` (string, optional) - e.g. 123456
@@ -59,6 +67,11 @@ The following attributes will returned for each consumer enquiry:
 * `phone` (string, optional) - e.g. +442078927246
 * `message` (string, optional) - e.g. Hello, when could i view?
 * `created_at` (string) - e.g. 2017-10-16 10:36:09 +0100
+* `questions_answers` (array[dict], optional) - All questions and answers for this consumer
+
+The following attributes will returned for updates:
+
+* `updated_at` (string) - e.g. 2017-10-16 10:36:09 +0100
 * `questions_answers` (array[dict], optional) - All questions and answers for this consumer
 
 #### On Success
